@@ -11,4 +11,9 @@ public class Game_should
 
         actual.ShouldBeFalse();
     }
+    [Fact]
+    public void do_something()
+    {
+        
+    }
 }
