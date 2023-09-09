@@ -68,4 +68,28 @@ public class Game_should
         subject.IsPlayable().ShouldBeTrue();
         subject.HowManyPlayers().ShouldBe(3);
     }
+    [Fact]
+    public void roll_for_current_player()
+    {
+        const string playerName1 = "yermom";
+        const string playerName2 = "nacho mama";
+        const string playerName3 = "another";
+        const int dieRoll = 1;
+        const string expectedCategory = "Science";
+        var log = new List<string>();
+        var subject = new Game(log.Add);
+        subject.Add(playerName1);
+        subject.Add(playerName2);
+        subject.Add(playerName3);
+        log.Clear();
+
+        subject.Roll(dieRoll);
+
+        log.Count().ShouldBe(5);
+        log[0].ShouldContain($"{playerName1} is the current player");
+        log[1].ShouldContain($"They have rolled a {dieRoll}");
+        log[2].ShouldContain($"{playerName1}'s new location is {dieRoll}");
+        log[3].ShouldContain($"The category is {expectedCategory}");
+        log[4].ShouldContain($"{expectedCategory} Question 0");
+   }
 }
