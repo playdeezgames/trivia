@@ -68,14 +68,13 @@ public class Game_should
         subject.IsPlayable().ShouldBeTrue();
         subject.HowManyPlayers().ShouldBe(3);
     }
-    [Fact]
-    public void roll_for_current_player()
+    [Theory]
+    [InlineData(1,"Science")]
+    public void roll_for_current_player(int dieRoll,string expectedCategory)
     {
         const string playerName1 = "yermom";
         const string playerName2 = "nacho mama";
         const string playerName3 = "another";
-        const int dieRoll = 1;
-        const string expectedCategory = "Science";
         var log = new List<string>();
         var subject = new Game(log.Add);
         subject.Add(playerName1);
