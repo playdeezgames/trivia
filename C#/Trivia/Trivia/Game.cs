@@ -20,10 +20,11 @@ namespace Trivia
 
         private int _currentPlayer;
         private bool _isGettingOutOfPenaltyBox;
-        private Action<string> writeOut = Console.WriteLine;
+        private readonly Action<string> _writeOut;
 
-        public Game()
+        public Game(Action<string> writeOut = null)
         {
+            _writeOut = writeOut ?? Console.WriteLine;
             for (var i = 0; i < 50; i++)
             {
                 _popQuestions.AddLast("Pop Question " + i);
@@ -50,8 +51,8 @@ namespace Trivia
             _purses[HowManyPlayers()] = 0;
             _inPenaltyBox[HowManyPlayers()] = false;
 
-            writeOut(playerName + " was added");
-            writeOut("They are player number " + _players.Count);
+            _writeOut(playerName + " was added");
+            _writeOut("They are player number " + _players.Count);
             return true;
         }
 
@@ -62,8 +63,8 @@ namespace Trivia
 
         public void Roll(int roll)
         {
-            writeOut(_players[_currentPlayer] + " is the current player");
-            writeOut("They have rolled a " + roll);
+            _writeOut(_players[_currentPlayer] + " is the current player");
+            _writeOut("They have rolled a " + roll);
 
             if (_inPenaltyBox[_currentPlayer])
             {
@@ -71,19 +72,19 @@ namespace Trivia
                 {
                     _isGettingOutOfPenaltyBox = true;
 
-                    writeOut(_players[_currentPlayer] + " is getting out of the penalty box");
+                    _writeOut(_players[_currentPlayer] + " is getting out of the penalty box");
                     _places[_currentPlayer] = _places[_currentPlayer] + roll;
                     if (_places[_currentPlayer] > 11) _places[_currentPlayer] = _places[_currentPlayer] - 12;
 
-                    writeOut(_players[_currentPlayer]
+                    _writeOut(_players[_currentPlayer]
                             + "'s new location is "
                             + _places[_currentPlayer]);
-                    writeOut("The category is " + CurrentCategory());
+                    _writeOut("The category is " + CurrentCategory());
                     AskQuestion();
                 }
                 else
                 {
-                    writeOut(_players[_currentPlayer] + " is not getting out of the penalty box");
+                    _writeOut(_players[_currentPlayer] + " is not getting out of the penalty box");
                     _isGettingOutOfPenaltyBox = false;
                 }
             }
@@ -92,10 +93,10 @@ namespace Trivia
                 _places[_currentPlayer] = _places[_currentPlayer] + roll;
                 if (_places[_currentPlayer] > 11) _places[_currentPlayer] = _places[_currentPlayer] - 12;
 
-                writeOut(_players[_currentPlayer]
+                _writeOut(_players[_currentPlayer]
                         + "'s new location is "
                         + _places[_currentPlayer]);
-                writeOut("The category is " + CurrentCategory());
+                _writeOut("The category is " + CurrentCategory());
                 AskQuestion();
             }
         }
@@ -104,22 +105,22 @@ namespace Trivia
         {
             if (CurrentCategory() == "Pop")
             {
-                writeOut(_popQuestions.First());
+                _writeOut(_popQuestions.First());
                 _popQuestions.RemoveFirst();
             }
             if (CurrentCategory() == "Science")
             {
-                writeOut(_scienceQuestions.First());
+                _writeOut(_scienceQuestions.First());
                 _scienceQuestions.RemoveFirst();
             }
             if (CurrentCategory() == "Sports")
             {
-                writeOut(_sportsQuestions.First());
+                _writeOut(_sportsQuestions.First());
                 _sportsQuestions.RemoveFirst();
             }
             if (CurrentCategory() == "Rock")
             {
-                writeOut(_rockQuestions.First());
+                _writeOut(_rockQuestions.First());
                 _rockQuestions.RemoveFirst();
             }
         }
@@ -144,9 +145,9 @@ namespace Trivia
             {
                 if (_isGettingOutOfPenaltyBox)
                 {
-                    writeOut("Answer was correct!!!!");
+                    _writeOut("Answer was correct!!!!");
                     _purses[_currentPlayer]++;
-                    writeOut(_players[_currentPlayer]
+                    _writeOut(_players[_currentPlayer]
                             + " now has "
                             + _purses[_currentPlayer]
                             + " Gold Coins.");
@@ -166,9 +167,9 @@ namespace Trivia
             }
             else
             {
-                writeOut("Answer was corrent!!!!");
+                _writeOut("Answer was corrent!!!!");
                 _purses[_currentPlayer]++;
-                writeOut(_players[_currentPlayer]
+                _writeOut(_players[_currentPlayer]
                         + " now has "
                         + _purses[_currentPlayer]
                         + " Gold Coins.");
@@ -183,8 +184,8 @@ namespace Trivia
 
         public bool WrongAnswer()
         {
-            writeOut("Question was incorrectly answered");
-            writeOut(_players[_currentPlayer] + " was sent to the penalty box");
+            _writeOut("Question was incorrectly answered");
+            _writeOut(_players[_currentPlayer] + " was sent to the penalty box");
             _inPenaltyBox[_currentPlayer] = true;
 
             _currentPlayer++;
