@@ -12,8 +12,16 @@ public class Game_should
         actual.ShouldBeFalse();
     }
     [Fact]
-    public void do_something()
+    public void add_a_player()
     {
-        
+        const string playerName = "yermom";
+        var log = new List<string>();
+        var subject = new Game(log.Add);
+
+        subject.Add(playerName);
+
+        log.Count.ShouldBe(2);
+        log[0].ShouldContain($"{playerName} was added");
+        log[1].ShouldContain("They are player number 1");
     }
 }
