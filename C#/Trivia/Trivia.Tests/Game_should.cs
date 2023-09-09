@@ -23,5 +23,7 @@ public class Game_should
         log.Count.ShouldBe(2);
         log[0].ShouldContain($"{playerName} was added");
         log[1].ShouldContain("They are player number 1");
+        subject.IsPlayable().ShouldBeFalse();
+        subject.HowManyPlayers().ShouldBe(1);
     }
 }
