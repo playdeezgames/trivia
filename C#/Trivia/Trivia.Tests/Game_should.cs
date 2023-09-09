@@ -70,6 +70,10 @@ public class Game_should
     }
     [Theory]
     [InlineData(1,"Science")]
+    [InlineData(2,"Sports")]
+    [InlineData(3,"Rock")]
+    [InlineData(4,"Pop")]
+    [InlineData(5,"Science")]
     public void roll_for_current_player(int dieRoll,string expectedCategory)
     {
         const string playerName1 = "yermom";
