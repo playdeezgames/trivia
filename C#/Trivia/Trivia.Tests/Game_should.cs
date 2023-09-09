@@ -3,7 +3,7 @@ namespace Trivia.Tests;
 public class Game_should
 {
     [Fact]
-    public void do_something_useful_with_a_meaningful_test_name()
+    public void initially_be_unplayable()
     {
         var subject = new Game();
 
