@@ -45,4 +45,27 @@ public class Game_should
         subject.IsPlayable().ShouldBeTrue();
         subject.HowManyPlayers().ShouldBe(2);
     }
+    [Fact]
+    public void add_three_players()
+    {
+        const string playerName1 = "yermom";
+        const string playerName2 = "nacho mama";
+        const string playerName3 = "another";
+        var log = new List<string>();
+        var subject = new Game(log.Add);
+
+        subject.Add(playerName1);
+        subject.Add(playerName2);
+        subject.Add(playerName3);
+
+        log.Count.ShouldBe(6);
+        log[0].ShouldContain($"{playerName1} was added");
+        log[1].ShouldContain("They are player number 1");
+        log[2].ShouldContain($"{playerName2} was added");
+        log[3].ShouldContain("They are player number 2");
+        log[4].ShouldContain($"{playerName3} was added");
+        log[5].ShouldContain("They are player number 3");
+        subject.IsPlayable().ShouldBeTrue();
+        subject.HowManyPlayers().ShouldBe(3);
+    }
 }
